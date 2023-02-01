@@ -109,7 +109,15 @@ class Game extends React.Component {
 			)
 		}).sort(() => this.state.isSortedAsc ? -1 : 1)
 
-		let status = winner.player ? 'Winner: ' + winner.player : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+		let status
+		if(!current.squares.includes(null) && !winner.player) {
+			status = 'The match ended in a tie'
+		} else if (winner.player) {
+			status = 'Winner: ' + winner.player
+		} else {
+			status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+		}
+
 		let sortOrder = this.state.isSortedAsc ? 'Descending' : 'Ascending'
 
 		const sorting = <button onClick={() => this.setSortingOrder()}>Sort {sortOrder}</button>
