@@ -104,7 +104,12 @@ class Game extends React.Component {
 
 			return (
 				<li key={move}>
-					<button className={this.state.stepNumber === move ? 'highlightedHistoryItem' : null} onClick={() => this.jumpTo(move)}>{desc}</button>
+					<button
+						className={this.state.stepNumber === move ? 'highlightedHistoryItem' : null}
+						onClick={() => this.jumpTo(move)}
+					>
+						{desc}
+					</button>
 				</li>
 			)
 		}).sort(() => this.state.isSortedAsc ? -1 : 1)
