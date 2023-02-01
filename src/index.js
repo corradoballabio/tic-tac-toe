@@ -4,7 +4,7 @@ import './index.css';
 
 function Square(props) {
 	return (
-		<button className="square" onClick={props.onClick}>
+		<button className={`square ${props.winnerSquare && 'highlightedSquare'}`} onClick={props.onClick}>
 			{props.value}
 		</button>
 	)
@@ -16,14 +16,17 @@ function Board(props) {
 		if(i % 3 === 0) return (
 			<div key={i} className="board-row">
 				<Square
+					winnerSquare={props.winningCombo.includes(i)}
 					value={props.squares[i]}
 					onClick={() => props.onClick(i)}
 				/>
 				<Square
+					winnerSquare={props.winningCombo.includes(i+1)}
 					value={props.squares[i+1]}
 					onClick={() => props.onClick(i+1)}
 				/>
 				<Square
+					winnerSquare={props.winningCombo.includes(i+2)}
 					value={props.squares[i+2]}
 					onClick={() => props.onClick(i+2)}
 				/>
@@ -117,6 +120,7 @@ class Game extends React.Component {
 					<Board
 						squares={current.squares}
 						onClick={(i) => this.handleClick(i)}
+						winningCombo={winner.combo}
 					/>
 				</div>
 				<div className="game-info">
