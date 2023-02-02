@@ -1,4 +1,5 @@
 import {render, screen, cleanup} from '@testing-library/react'
+import renderer from 'react-test-renderer'
 import '@testing-library/jest-dom'
 
 import Square from '../square'
@@ -15,4 +16,9 @@ test('rendering square component', () => {
   expect(squareElement).toBeInTheDocument()
   expect(squareElement).toHaveTextContent('value-1')
   expect(squareElement).toContainHTML('button')
+})
+
+test('matches square snapshot', () => {
+  const tree = renderer.create(<Square testId={1}/>).toJSON()
+  expect(tree).toMatchSnapshot()
 })
