@@ -1,27 +1,25 @@
 import Square from "./square";
 
 function Board(props) {
-	const squareGrid = props.squares.map((_, i) => {
-		if(i % 3 === 0) return (
-			<div key={i} className="board-row">
-				<Square
-					winnerSquare={props.winningCombo.includes(i)}
-					value={props.squares[i]}
-					onClick={() => props.onClick(i)}
-				/>
-				<Square
-					winnerSquare={props.winningCombo.includes(i+1)}
-					value={props.squares[i+1]}
-					onClick={() => props.onClick(i+1)}
-				/>
-				<Square
-					winnerSquare={props.winningCombo.includes(i+2)}
-					value={props.squares[i+2]}
-					onClick={() => props.onClick(i+2)}
-				/>
-			</div>
-		)
-		return null
+	const matrix = props.squares.reduce((m, k, i) => {
+		i % 3 === 0 ? m.push([k]) : m[m.length-1].push(k)
+    return m;
+	}, [])
+
+	const squareGrid = matrix.map((row, i) => {
+		return (<div key={i} data-testid={'row'+i} className="board-row">
+			{row.map((_, j) => {
+				let index = 3*i + j
+				return (
+					<Square
+						testId={index}
+						winnerSquare={props.winningCombo.includes(index)}
+						value={props.squares[index]}
+						onClick={() => props.onClick(index)}
+					/>
+				)
+			})}
+		</div>)
 	})
 
 	return (
